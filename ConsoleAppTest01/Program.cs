@@ -1,59 +1,105 @@
-﻿String[] studentNames = { "sophia", "andrew", "emma", "logan" };
-int currentAssignment = 5;
-Char[] studentsGrade = new Char[4];
+List<string> studentNames = new List<string>();
+List<string> studentSubjects = new List<string>();
+List<double> studentsAvg = new List<double>();
+List<char> studentsGrade = new List<char>();
 
-int[] sophiaScores = { 90,86,87,98,100};
-int[] andrewScores = { 92,89,81,96,90};
-int[] emmaScores = { 90,85,87,98,68};
-int[] loganScores = { 90,95,87,88,96};
+int studentCount = 0;
+int subjectCount = 0;
 
-int sophiaSum = 0;
-int andrewSum = 0;
-int emmaSum = 0;
-int loganSum = 0;
-
-foreach (int sophia_Score in sophiaScores) {
-    sophiaSum += sophia_Score;
-}
-foreach (int andrew_Scores in andrewScores)
+// take student names
+Console.WriteLine("Enter Student's Names here(Type 'done' when finished) - ");
+while (true)
 {
-    andrewSum += andrew_Scores;
-}
-foreach (int emma_Scores in emmaScores)
-{
-    emmaSum += emma_Scores;
-}
-foreach (int logan_Scores in loganScores)
-{
-    loganSum += logan_Scores;
-}
-
-decimal sophiaScore = (decimal) sophiaSum/currentAssignment;
-decimal andrewScore = (decimal)andrewSum / currentAssignment;
-decimal emmaScore = (decimal)emmaSum / currentAssignment;
-decimal loganScore = (decimal)loganSum / currentAssignment;
-
-decimal[] studentScores = { sophiaScore, andrewScore, emmaScore, loganScore };
-
-for (int i = 0 ; i< studentScores.Length; i++)
-{
-    if (studentScores[i] >= 75 && studentScores[i] <= 100)
+    Console.WriteLine($"Student Name {studentCount} :");
+    studentCount++;
+    string input = Console.ReadLine();
+    if (input.ToLower() == "done")
     {
-        studentsGrade[i] = 'A';
+        break;
     }
-    else if (studentScores[i] < 75 && studentScores[i] >= 65) {
-        studentsGrade[i] = 'B';
-    }
-    else if (studentScores[i] < 65 && studentScores[i] >= 45)
+    studentNames.Add(input);
+}
+
+// take subject names
+Console.WriteLine("Enter Student's subject here(Type 'done' when finished) - ");
+while (true)
+{
+    Console.WriteLine($"subject {subjectCount} :");
+    subjectCount++;
+    string input = Console.ReadLine();
+    if (input.ToLower() == "done")
     {
-        studentsGrade[i] = 'C';
+        break;
     }
-    else if (studentScores[i] < 45)
+    studentSubjects.Add(input);
+}
+
+// take scores
+foreach (string studentName in studentNames)
+{
+    Console.WriteLine($"Enter scores for {studentName}:\n");
+    Dictionary<string, List<int>> subjectScores = new Dictionary<string, List<int>>();
+
+    foreach (string studentSubject in studentSubjects)
     {
-        studentsGrade[i] = 'F';
+        List<int> scoresList = new List<int>();
+
+        while (true)
+        {
+            Console.Write($"Enter score for {studentSubject} (Type 'done' when finished): ");
+            string input = Console.ReadLine();
+
+            if (input.ToLower() == "done")
+            {
+                break;
+            }
+
+            // Validate and add the score to the list
+            if (int.TryParse(input, out int score))
+            {
+                scoresList.Add(score);
+                Console.WriteLine($"Added score {score} for {studentName} in {studentSubject}\n");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid score.");
+            }
+        }
+
+        // Add the list of scores to the subjectScores dictionary
+        subjectScores.Add(studentSubject, scoresList);
+    }
+
+    // Calculate average for the student and add to the studentsAvg list
+    double averageScore = subjectScores.Values.SelectMany(x => x).Average();
+    studentsAvg.Add(averageScore);
+    Console.WriteLine($"Average score for {studentName}: {averageScore}\n");
+}
+
+for (int i = 0; i < studentsAvg.Count; i++)
+{
+    if (studentsAvg[i] >= 75 && studentsAvg[i] <= 100)
+    {
+        studentsGrade.Add('A');
+    }
+    else if (studentsAvg[i] < 75 && studentsAvg[i] >= 65)
+    {
+        studentsGrade.Add('B');
+    }
+    else if (studentsAvg[i] < 65 && studentsAvg[i] >= 45)
+    {
+        studentsGrade.Add('C');
+    }
+    else if (studentsAvg[i] < 45)
+    {
+        studentsGrade.Add('F');
+    }
+    else {
+        studentsGrade.Add('O');
     }
 }
 Console.WriteLine("Student\t\t\tGrade\n");
-for (int i= 0; i < studentNames.Length; i++) {
-    Console.WriteLine($"{studentNames[i]}\t\t\t{studentScores[i]}\t\t{studentsGrade[i]}");
+for (int i = 0; i < studentNames.Count; i++)
+{
+    Console.WriteLine($"{studentNames[i]}\t\t\t{studentsAvg[i]}\t\t{studentsGrade[i]}");
 }
