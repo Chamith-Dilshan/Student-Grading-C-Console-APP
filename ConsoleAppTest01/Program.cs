@@ -7,10 +7,10 @@ int studentCount = 0;
 int subjectCount = 0;
 
 // take student names
-Console.WriteLine("Enter Student's Names here(Type 'done' when finished) - ");
+Console.WriteLine("Enter Student's Names here(Type 'done' when finished) -");
 while (true)
 {
-    Console.WriteLine($"Student Name {studentCount} :");
+    Console.WriteLine($"\nStudent Name {studentCount} :");
     studentCount++;
     string input = Console.ReadLine();
     if (input.ToLower() == "done")
@@ -21,10 +21,10 @@ while (true)
 }
 
 // take subject names
-Console.WriteLine("Enter Student's subject here(Type 'done' when finished) - ");
+Console.WriteLine("\nEnter Student's subject here(Type 'done' when finished) -");
 while (true)
 {
-    Console.WriteLine($"subject {subjectCount} :");
+    Console.WriteLine($"\nsubject {subjectCount} :");
     subjectCount++;
     string input = Console.ReadLine();
     if (input.ToLower() == "done")
@@ -37,7 +37,7 @@ while (true)
 // take scores
 foreach (string studentName in studentNames)
 {
-    Console.WriteLine($"Enter scores for {studentName}:\n");
+    Console.WriteLine($"\nEnter Scores For Student - {studentName}:\n");
     Dictionary<string, List<int>> subjectScores = new Dictionary<string, List<int>>();
 
     foreach (string studentSubject in studentSubjects)
